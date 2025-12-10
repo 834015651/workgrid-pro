@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <script>
+  // 🛡️ 拦截所有发往 xapi.bntyh.com 的请求
+  const originalFetch = window.fetch;
+  window.fetch = function(url, options) {
+    if (typeof url === 'string' && url.includes('xapi.bntyh.com')) {
+      console.warn('🚫 已拦截恶意请求:', url);
+      // 伪造一个成功的响应，骗过那个脚本
+      return Promise.resolve(new Response(JSON.stringify({ success: true, version: '9.9.9' }), { status: 200 }));
+    }
+    return originalFetch(url, options);
+  };
+
+  // 🛡️ 拦截 XHR 请求 (双重保险)
+  const originalOpen = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function(method, url) {
+    if (typeof url === 'string' && url.includes('xapi.bntyh.com')) {
+      console.warn('🚫 已拦截恶意 XHR:', url);
+      // 让请求指向一个空地址，或者直接报错
+      arguments[1] = 'about:blank'; 
+    }
+    return originalOpen.apply(this, arguments);
+  };
+</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="description" content="WorkGrid Pro - 专业工地考勤管理系统" />
+    <title>工时管理系统</title>
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2921/2921226.png" />
+    <style>
+      /* Custom scrollbar for better aesthetics in the large table */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8; 
+      }
+      /* Sticky column utility */
+      .sticky-col {
+        position: sticky;
+        z-index: 10;
+        background-color: white; /* Ensure transparency doesn't break sticky view */
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
+    "react-markdown": "https://aistudiocdn.com/react-markdown@^10.1.0",
+    "xlsx": "https://esm.sh/xlsx-js-style@1.2.0",
+    "path": "https://aistudiocdn.com/path@^0.12.7",
+    "vite": "https://aistudiocdn.com/vite@^7.2.7",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.2",
+    "url": "https://aistudiocdn.com/url@^0.11.4",
+    "child_process": "https://aistudiocdn.com/child_process@^1.0.2",
+    "lunar-javascript": "https://aistudiocdn.com/lunar-javascript@^1.7.7",
+    "fs": "https://aistudiocdn.com/fs@^0.0.1-security",
+    "@supabase/supabase-js": "https://aistudiocdn.com/@supabase/supabase-js@^2.86.2",
+    "xlsx-js-style": "https://aistudiocdn.com/xlsx-js-style@^1.2.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-gray-50 text-slate-800 antialiased">
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script><script type="module" src="/index.tsx"></script>
+</body>
+</html>

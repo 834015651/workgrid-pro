@@ -1,0 +1,5 @@
+{
+  "name": "DataSense Importer",
+  "description": "An intelligent data import and analysis tool. Upload documents, text, or images to extract structured insights, summarize content, or convert formats using Gemini AI.",
+  "requestFramePermissions": []
+}
